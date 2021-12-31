@@ -1,8 +1,8 @@
 fx_version 'cerulean'
 game 'gta5'
 
-description 'lj-Inventory'
-version '1.0'
+description 'QB-Inventory'
+version '1.0.0'
 
 shared_scripts {
 	'config.lua',
@@ -20,7 +20,6 @@ files {
 	'html/ui.html',
 	'html/css/main.css',
 	'html/js/app.js',
-	'html/images/*.svg',
 	'html/images/*.png',
 	'html/images/*.jpg',
 	'html/ammo_images/*.png',
