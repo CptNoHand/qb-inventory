@@ -15,6 +15,17 @@ local isCrafting = false
 local isHotbar = false
 local showTrunkPos = false
 local itemInfos = {}
+local showBlur = true
+
+RegisterNUICallback('showBlur', function()
+    Wait(50)
+    TriggerEvent("lj-inventory:client:showBlur")
+end) 
+
+RegisterNetEvent("lj-inventory:client:showBlur", function()
+    Wait(50)
+    showBlur = not showBlur
+end)
 
 -- Functions
 
@@ -67,7 +78,6 @@ local function FormatWeaponAttachments(itemdata)
     end
     return attachments
 end
-
 
 local function IsBackEngine(vehModel)
     if BackEngineVehicles[vehModel] then return true end
@@ -142,6 +152,8 @@ end
 local function openAnim()
     LoadAnimDict('pickup_object')
     TaskPlayAnim(PlayerPedId(),'pickup_object', 'putdown_low', 5.0, 1.5, 1.0, 48, 0.0, 0, 0, 0)
+    Wait(500)
+    ClearPedTasks(PlayerPedId())
 end
 
 local function ItemsToItemInfo()
@@ -311,7 +323,11 @@ end)
 
 RegisterNetEvent('inventory:client:OpenInventory', function(PlayerAmmo, inventory, other)
     if not IsEntityDead(PlayerPedId()) then
+        Wait(500)
         ToggleHotbar(false)
+        if showBlur == true then
+            TriggerScreenblurFadeIn(1000)
+        end
         SetNuiFocus(true, true)
         if other ~= nil then
             currentOtherInventory = other.name
@@ -424,6 +440,7 @@ RegisterNetEvent('inventory:client:UseWeapon', function(weaponData, shootbool)
     local weaponName = tostring(weaponData.name)
     if currentWeapon == weaponName then
         SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
+        Wait(1500)
         RemoveAllPedWeapons(ped, true)
         TriggerEvent('weapons:client:SetCurrentWeapon', nil, shootbool)
         currentWeapon = nil
@@ -553,28 +570,28 @@ RegisterCommand('inventory', function()
 
                 -- Trunk
                 if CurrentVehicle ~= nil then
-                local maxweight = 0
-                local slots = 0
-                -- GRAB WEIGHT AND SLOTS FROM SHARED LUA
-                local modelName = GetDisplayNameFromVehicleModel(GetEntityModel(curVeh)):lower()
-
-                if maxweight == 0 and QBCore.Shared.Vehicles[modelName] ~= nil then
-                    maxweight = QBCore.Shared.Vehicles[modelName]['trunkspace']
-                    slots = QBCore.Shared.Vehicles[modelName]['trunkslots']
-                end
-                
-                if maxweight == 0 then
-                    maxweight = 30000
-                end
-                if slots == 0 then
-                    slots = 15
-                end
-                local other = {
-                    maxweight = maxweight,
-                    slots = slots,
-                }
-                TriggerServerEvent("inventory:server:OpenInventory", "trunk", CurrentVehicle, other)
-                OpenTrunk()
+                    local maxweight = 0
+                    local slots = 0
+                    -- GRAB WEIGHT AND SLOTS FROM SHARED LUA
+                    local modelName = GetDisplayNameFromVehicleModel(GetEntityModel(curVeh)):lower()
+    
+                    if maxweight == 0 and QBCore.Shared.Vehicles[modelName] ~= nil then
+                        maxweight = QBCore.Shared.Vehicles[modelName]['trunkspace']
+                        slots = QBCore.Shared.Vehicles[modelName]['trunkslots']
+                    end
+                    
+                    if maxweight == 0 then
+                        maxweight = 30000
+                    end
+                    if slots == 0 then
+                        slots = 15
+                    end
+                    local other = {
+                        maxweight = maxweight,
+                        slots = slots,
+                    }
+                    TriggerServerEvent("inventory:server:OpenInventory", "trunk", CurrentVehicle, other)
+                    OpenTrunk()
                 elseif CurrentGlovebox ~= nil then
                     TriggerServerEvent("inventory:server:OpenInventory", "glovebox", CurrentGlovebox)
                 elseif CurrentDrop ~= 0 then
@@ -687,6 +704,7 @@ RegisterNUICallback("CloseInventory", function(data, cb)
         CurrentStash = nil
         SetNuiFocus(false, false)
         inInventory = false
+        TriggerScreenblurFadeOut(1000)
         ClearPedTasks(PlayerPedId())
         return
     end
@@ -704,6 +722,8 @@ RegisterNUICallback("CloseInventory", function(data, cb)
         TriggerServerEvent("inventory:server:SaveInventory", "drop", CurrentDrop)
         CurrentDrop = 0
     end
+    Wait(50)
+    TriggerScreenblurFadeOut(1000)
     SetNuiFocus(false, false)
     inInventory = false
 end)
@@ -777,7 +797,7 @@ CreateThread(function()
         if DropsNear ~= nil then
             for k, v in pairs(DropsNear) do
                 if DropsNear[k] ~= nil then
-                    DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.15, 120, 10, 20, 155, false, false, false, 1, false, false, false)
+                    DrawMarker( 20, v.coords.x, v.coords.y, v.coords.z - 0.6, 0, 0, 0, 0, 0, 0, 0.35, 0.5, 0.15, 252, 255, 255, 91, 0, 0, 0, 0)
                 end
             end
         end
@@ -839,12 +859,12 @@ CreateThread(function()
 	while true do
 		local pos = GetEntityCoords(PlayerPedId())
 		local inRange = false
-		local distance = #(pos - vector3(Config.AttachmentCraftingLocation))
+		local distance = #(pos - Config.AttachmentCrafting.location)
 
 		if distance < 10 then
 			inRange = true
 			if distance < 1.5 then
-				DrawText3Ds(Config.AttachmentCraftingLocation.x, Config.AttachmentCraftingLocation.y, Config.AttachmentCraftingLocation.z, "~g~E~w~ - Craft")
+				DrawText3Ds(Config.AttachmentCrafting["location"].x, Config.AttachmentCrafting["location"].y, Config.AttachmentCrafting["location"].z, "~g~E~w~ - Craft")
 				if IsControlJustPressed(0, 38) then
 					local crafting = {}
 					crafting.label = "Attachment Crafting"
