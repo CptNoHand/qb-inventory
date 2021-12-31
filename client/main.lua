@@ -15,6 +15,17 @@ local isCrafting = false
 local isHotbar = false
 local showTrunkPos = false
 local itemInfos = {}
+local showBlur = true
+
+RegisterNUICallback('showBlur', function()
+    Wait(50)
+    TriggerEvent("lj-inventory:client:showBlur")
+end) 
+
+RegisterNetEvent("lj-inventory:client:showBlur", function()
+    Wait(50)
+    showBlur = not showBlur
+end)
 
 -- Functions
 
@@ -67,7 +78,6 @@ local function FormatWeaponAttachments(itemdata)
     end
     return attachments
 end
-
 
 local function IsBackEngine(vehModel)
     if BackEngineVehicles[vehModel] then return true end
@@ -142,23 +152,24 @@ end
 local function openAnim()
     LoadAnimDict('pickup_object')
     TaskPlayAnim(PlayerPedId(),'pickup_object', 'putdown_low', 5.0, 1.5, 1.0, 48, 0.0, 0, 0, 0)
+    Wait(500)
+    ClearPedTasks(PlayerPedId())
 end
 
 local function ItemsToItemInfo()
 	itemInfos = {
-		[1] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 3x, " ..QBCore.Shared.Items["plastic"]["label"] .. ": 4x."},
-		[2] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 8x, " ..QBCore.Shared.Items["plastic"]["label"] .. ": 6x."},
-		[3] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 5x, " ..QBCore.Shared.Items["plastic"]["label"] .. ": 4x, "..QBCore.Shared.Items["aluminum"]["label"] .. ": 6x."},
-		[4] = {costs = QBCore.Shared.Items["electronickit"]["label"] .. ": 2x, " ..QBCore.Shared.Items["plastic"]["label"] .. ": 4x, "..QBCore.Shared.Items["steel"]["label"] .. ": 5x."},
-		[5] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 4x, " ..QBCore.Shared.Items["plastic"]["label"] .. ": 3x, "..QBCore.Shared.Items["aluminum"]["label"] .. ": 4x, "..QBCore.Shared.Items["iron"]["label"] .. ": 5x, "..QBCore.Shared.Items["electronickit"]["label"] .. ": 1x."},
-		[6] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 4x, " ..QBCore.Shared.Items["steel"]["label"] .. ": 4x, "..QBCore.Shared.Items["aluminum"]["label"] .. ": 4x."},
-		[7] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 4x, " ..QBCore.Shared.Items["steel"]["label"] .. ": 5x, "..QBCore.Shared.Items["plastic"]["label"] .. ": 7x."},
-		[8] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 5x, " ..QBCore.Shared.Items["steel"]["label"] .. ": 5x, "..QBCore.Shared.Items["copper"]["label"] .. ": 5x."},
-		[9] = {costs = QBCore.Shared.Items["iron"]["label"] .. ": 6x, " ..QBCore.Shared.Items["glass"]["label"] .. ": 6x."},
-		[10] = {costs = QBCore.Shared.Items["aluminum"]["label"] .. ": 6x, " ..QBCore.Shared.Items["glass"]["label"] .. ": 6x."},
-		[11] = {costs = QBCore.Shared.Items["iron"]["label"] .. ": 5x, " ..QBCore.Shared.Items["steel"]["label"] .. ": 5x, "..QBCore.Shared.Items["plastic"]["label"] .. ": 6x, "..QBCore.Shared.Items["aluminum"]["label"] .. ": 5x."},
-		[12] = {costs = QBCore.Shared.Items["iron"]["label"] .. ": 5x, " ..QBCore.Shared.Items["steel"]["label"] .. ": 6x, "..QBCore.Shared.Items["screwdriverset"]["label"] .. ": 3x, "..QBCore.Shared.Items["advancedlockpick"]["label"] .. ": 5x."},
-        [13] = {costs = QBCore.Shared.Items["iron"]["label"] .. ": 1x, " ..QBCore.Shared.Items["steel"]["label"] .. ": 1x, "..QBCore.Shared.Items["screwdriverset"]["label"] .. ": 1x, "..QBCore.Shared.Items["thermite"]["label"] .. ": 1x."},
+		[1] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 22x, " ..QBCore.Shared.Items["plastic"]["label"] .. ": 32x."},
+		[2] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 30x, " ..QBCore.Shared.Items["plastic"]["label"] .. ": 42x."},
+		[3] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 30x, " ..QBCore.Shared.Items["plastic"]["label"] .. ": 45x, "..QBCore.Shared.Items["aluminum"]["label"] .. ": 28x."},
+		[4] = {costs = QBCore.Shared.Items["electronickit"]["label"] .. ": 2x, " ..QBCore.Shared.Items["plastic"]["label"] .. ": 52x, "..QBCore.Shared.Items["steel"]["label"] .. ": 40x."},
+		[5] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 10x, " ..QBCore.Shared.Items["plastic"]["label"] .. ": 50x, "..QBCore.Shared.Items["aluminum"]["label"] .. ": 30x, "..QBCore.Shared.Items["iron"]["label"] .. ": 17x, "..QBCore.Shared.Items["electronickit"]["label"] .. ": 1x."},
+		[6] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 36x, " ..QBCore.Shared.Items["steel"]["label"] .. ": 24x, "..QBCore.Shared.Items["aluminum"]["label"] .. ": 28x."},
+		[7] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 32x, " ..QBCore.Shared.Items["steel"]["label"] .. ": 43x, "..QBCore.Shared.Items["plastic"]["label"] .. ": 61x."},
+		[8] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 50x, " ..QBCore.Shared.Items["steel"]["label"] .. ": 37x, "..QBCore.Shared.Items["copper"]["label"] .. ": 26x."},
+		[9] = {costs = QBCore.Shared.Items["iron"]["label"] .. ": 60x, " ..QBCore.Shared.Items["glass"]["label"] .. ": 30x."},
+		[10] = {costs = QBCore.Shared.Items["aluminum"]["label"] .. ": 60x, " ..QBCore.Shared.Items["glass"]["label"] .. ": 30x."},
+		[11] = {costs = QBCore.Shared.Items["iron"]["label"] .. ": 33x, " ..QBCore.Shared.Items["steel"]["label"] .. ": 44x, "..QBCore.Shared.Items["plastic"]["label"] .. ": 55x, "..QBCore.Shared.Items["aluminum"]["label"] .. ": 22x."},
+		[12] = {costs = QBCore.Shared.Items["iron"]["label"] .. ": 50x, " ..QBCore.Shared.Items["steel"]["label"] .. ": 50x, "..QBCore.Shared.Items["screwdriverset"]["label"] .. ": 3x, "..QBCore.Shared.Items["advancedlockpick"]["label"] .. ": 2x."},
 	}
 
 	local items = {}
@@ -186,14 +197,14 @@ end
 
 local function SetupAttachmentItemsInfo()
 	itemInfos = {
-		[1] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 2x, " .. QBCore.Shared.Items["steel"]["label"] .. ": 5x, " .. QBCore.Shared.Items["rubber"]["label"] .. ": 2x"},
-		[2] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 1x, " .. QBCore.Shared.Items["steel"]["label"] .. ": 2x, " .. QBCore.Shared.Items["rubber"]["label"] .. ": 8x"},
-		[3] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 3x, " .. QBCore.Shared.Items["steel"]["label"] .. ": 7x, " .. QBCore.Shared.Items["rubber"]["label"] .. ": 2x"},
-		[4] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 3x, " .. QBCore.Shared.Items["steel"]["label"] .. ": 6x, " .. QBCore.Shared.Items["rubber"]["label"] .. ": 2x"},
-		[5] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 5x, " .. QBCore.Shared.Items["steel"]["label"] .. ": 8x, " .. QBCore.Shared.Items["rubber"]["label"] .. ": 6x"},
-		[6] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 4x, " .. QBCore.Shared.Items["steel"]["label"] .. ": 5x, " .. QBCore.Shared.Items["rubber"]["label"] .. ": 2x"},
-		[7] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 6x, " .. QBCore.Shared.Items["steel"]["label"] .. ": 8x, " .. QBCore.Shared.Items["rubber"]["label"] .. ": 2x, " .. QBCore.Shared.Items["smg_extendedclip"]["label"] .. ": 1x"},
-		[8] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 5x, " .. QBCore.Shared.Items["steel"]["label"] .. ": 9x, " .. QBCore.Shared.Items["rubber"]["label"] .. ": 4x, " .. QBCore.Shared.Items["smg_extendedclip"]["label"] .. ": 2x"},
+		[1] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 140x, " .. QBCore.Shared.Items["steel"]["label"] .. ": 250x, " .. QBCore.Shared.Items["rubber"]["label"] .. ": 60x"},
+		[2] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 165x, " .. QBCore.Shared.Items["steel"]["label"] .. ": 285x, " .. QBCore.Shared.Items["rubber"]["label"] .. ": 75x"},
+		[3] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 190x, " .. QBCore.Shared.Items["steel"]["label"] .. ": 305x, " .. QBCore.Shared.Items["rubber"]["label"] .. ": 85x, " .. QBCore.Shared.Items["smg_extendedclip"]["label"] .. ": 1x"},
+		[4] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 205x, " .. QBCore.Shared.Items["steel"]["label"] .. ": 340x, " .. QBCore.Shared.Items["rubber"]["label"] .. ": 110x, " .. QBCore.Shared.Items["smg_extendedclip"]["label"] .. ": 2x"},
+		[5] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 230x, " .. QBCore.Shared.Items["steel"]["label"] .. ": 365x, " .. QBCore.Shared.Items["rubber"]["label"] .. ": 130x"},
+		[6] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 255x, " .. QBCore.Shared.Items["steel"]["label"] .. ": 390x, " .. QBCore.Shared.Items["rubber"]["label"] .. ": 145x"},
+		[7] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 270x, " .. QBCore.Shared.Items["steel"]["label"] .. ": 435x, " .. QBCore.Shared.Items["rubber"]["label"] .. ": 155x"},
+		[8] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 300x, " .. QBCore.Shared.Items["steel"]["label"] .. ": 469x, " .. QBCore.Shared.Items["rubber"]["label"] .. ": 170x"},
 	}
 
 	local items = {}
@@ -311,7 +322,11 @@ end)
 
 RegisterNetEvent('inventory:client:OpenInventory', function(PlayerAmmo, inventory, other)
     if not IsEntityDead(PlayerPedId()) then
+        Wait(500)
         ToggleHotbar(false)
+        if showBlur == true then
+            TriggerScreenblurFadeIn(1000)
+        end
         SetNuiFocus(true, true)
         if other ~= nil then
             currentOtherInventory = other.name
@@ -424,6 +439,7 @@ RegisterNetEvent('inventory:client:UseWeapon', function(weaponData, shootbool)
     local weaponName = tostring(weaponData.name)
     if currentWeapon == weaponName then
         SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
+        Wait(1500)
         RemoveAllPedWeapons(ped, true)
         TriggerEvent('weapons:client:SetCurrentWeapon', nil, shootbool)
         currentWeapon = nil
@@ -551,30 +567,65 @@ RegisterCommand('inventory', function()
                     end
                 end
 
-                -- Trunk
-                if CurrentVehicle ~= nil then
-                local maxweight = 0
-                local slots = 0
-                -- GRAB WEIGHT AND SLOTS FROM SHARED LUA
-                local modelName = GetDisplayNameFromVehicleModel(GetEntityModel(curVeh)):lower()
-
-                if maxweight == 0 and QBCore.Shared.Vehicles[modelName] ~= nil then
-                    maxweight = QBCore.Shared.Vehicles[modelName]['trunkspace']
-                    slots = QBCore.Shared.Vehicles[modelName]['trunkslots']
-                end
-                
-                if maxweight == 0 then
-                    maxweight = 30000
-                end
-                if slots == 0 then
-                    slots = 15
-                end
-                local other = {
-                    maxweight = maxweight,
-                    slots = slots,
-                }
-                TriggerServerEvent("inventory:server:OpenInventory", "trunk", CurrentVehicle, other)
-                OpenTrunk()
+                if CurrentVehicle ~= nil then		-- Trunk
+                    local vehicleClass = GetVehicleClass(curVeh)
+                    local maxweight = 0
+                    local slots = 0
+                    if vehicleClass == 0 then
+                        maxweight = 38000
+                        slots = 30
+                    elseif vehicleClass == 1 then
+                        maxweight = 50000
+                        slots = 40
+                    elseif vehicleClass == 2 then
+                        maxweight = 75000
+                        slots = 50
+                    elseif vehicleClass == 3 then
+                        maxweight = 42000
+                        slots = 35
+                    elseif vehicleClass == 4 then
+                        maxweight = 38000
+                        slots = 30
+                    elseif vehicleClass == 5 then
+                        maxweight = 30000
+                        slots = 25
+                    elseif vehicleClass == 6 then
+                        maxweight = 30000
+                        slots = 25
+                    elseif vehicleClass == 7 then
+                        maxweight = 30000
+                        slots = 25
+                    elseif vehicleClass == 8 then
+                        maxweight = 15000
+                        slots = 15
+                    elseif vehicleClass == 9 then
+                        maxweight = 60000
+                        slots = 35
+                    elseif vehicleClass == 12 then
+                        maxweight = 120000
+                        slots = 35
+		            elseif vehicleClass == 13 then
+                        maxweight = 0
+                        slots = 0
+                    elseif vehicleClass == 14 then
+                        maxweight = 120000
+                        slots = 50
+                    elseif vehicleClass == 15 then
+                        maxweight = 120000
+                        slots = 50
+                    elseif vehicleClass == 16 then
+                        maxweight = 120000
+                        slots = 50
+                    else
+                        maxweight = 60000
+                        slots = 35
+                    end
+                    local other = {
+                        maxweight = maxweight,
+                        slots = slots,
+                    }
+                    TriggerServerEvent("inventory:server:OpenInventory", "trunk", CurrentVehicle, other)
+                    OpenTrunk()
                 elseif CurrentGlovebox ~= nil then
                     TriggerServerEvent("inventory:server:OpenInventory", "glovebox", CurrentGlovebox)
                 elseif CurrentDrop ~= 0 then
@@ -687,6 +738,7 @@ RegisterNUICallback("CloseInventory", function(data, cb)
         CurrentStash = nil
         SetNuiFocus(false, false)
         inInventory = false
+        TriggerScreenblurFadeOut(1000)
         ClearPedTasks(PlayerPedId())
         return
     end
@@ -704,6 +756,8 @@ RegisterNUICallback("CloseInventory", function(data, cb)
         TriggerServerEvent("inventory:server:SaveInventory", "drop", CurrentDrop)
         CurrentDrop = 0
     end
+    Wait(50)
+    TriggerScreenblurFadeOut(1000)
     SetNuiFocus(false, false)
     inInventory = false
 end)
@@ -777,7 +831,7 @@ CreateThread(function()
         if DropsNear ~= nil then
             for k, v in pairs(DropsNear) do
                 if DropsNear[k] ~= nil then
-                    DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.15, 120, 10, 20, 155, false, false, false, 1, false, false, false)
+                    DrawMarker( 20, v.coords.x, v.coords.y, v.coords.z - 0.6, 0, 0, 0, 0, 0, 0, 0.35, 0.5, 0.15, 252, 255, 255, 91, 0, 0, 0, 0)
                 end
             end
         end
@@ -810,7 +864,7 @@ CreateThread(function()
     end
 end)
 
-CreateThread(function()
+--[[CreateThread(function()
 	while true do
 		Wait(0)
 		local pos, awayFromObject = GetEntityCoords(PlayerPedId()), true
@@ -839,12 +893,12 @@ CreateThread(function()
 	while true do
 		local pos = GetEntityCoords(PlayerPedId())
 		local inRange = false
-		local distance = #(pos - vector3(Config.AttachmentCraftingLocation))
+		local distance = #(pos - Config.AttachmentCrafting.location)
 
 		if distance < 10 then
 			inRange = true
 			if distance < 1.5 then
-				DrawText3Ds(Config.AttachmentCraftingLocation.x, Config.AttachmentCraftingLocation.y, Config.AttachmentCraftingLocation.z, "~g~E~w~ - Craft")
+				DrawText3Ds(Config.AttachmentCrafting["location"].x, Config.AttachmentCrafting["location"].y, Config.AttachmentCrafting["location"].z, "~g~E~w~ - Craft")
 				if IsControlJustPressed(0, 38) then
 					local crafting = {}
 					crafting.label = "Attachment Crafting"
@@ -860,4 +914,46 @@ CreateThread(function()
 
 		Wait(3)
 	end
+end)]]--
+
+    --qb-target
+    RegisterNetEvent("inventory:client:Crafting", function(dropId)
+	local crafting = {}
+	crafting.label = "Crafting"
+	crafting.items = GetThresholdItems()
+	TriggerServerEvent("inventory:server:OpenInventory", "crafting", math.random(1, 99), crafting)
 end)
+
+
+RegisterNetEvent("inventory:client:WeaponAttachmentCrafting", function(dropId)
+	local crafting = {}
+	crafting.label = "Attachment Crafting"
+	crafting.items = GetAttachmentThresholdItems()
+	TriggerServerEvent("inventory:server:OpenInventory", "attachment_crafting", math.random(1, 99), crafting)
+end)
+
+local toolBoxModels = {
+    `prop_toolchest_05`,
+    `prop_tool_bench02_ld`,
+    `prop_tool_bench02`,
+    `prop_toolchest_02`,
+    `prop_toolchest_03`,
+    `prop_toolchest_03_l2`,
+    `prop_toolchest_05`,
+    `prop_toolchest_04`,
+}
+exports['qb-target']:AddTargetModel(toolBoxModels, {
+		options = {
+			{
+				event = "inventory:client:WeaponAttachmentCrafting",
+				icon = "fas fa-wrench",
+				label = "Weapon Attachment Crafting", 
+			},
+			{
+				event = "inventory:client:Crafting",
+				icon = "fas fa-wrench",
+				label = "Item Crafting", 
+			},
+		},
+    distance = 1.0
+})

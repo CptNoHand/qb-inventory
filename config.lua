@@ -30,13 +30,13 @@ Config.VendingItem = {
 }
 
 Config.CraftingItems = {
-	[1] = {
+    [1] = {
         name = "lockpick",
         amount = 50,
         info = {},
         costs = {
-            ["metalscrap"] = 3,
-            ["plastic"] = 4,
+            ["metalscrap"] = 22,
+            ["plastic"] = 32,
         },
         type = "item",
         slot = 1,
@@ -48,8 +48,8 @@ Config.CraftingItems = {
         amount = 50,
         info = {},
         costs = {
-            ["metalscrap"] = 8,
-            ["plastic"] = 6,
+            ["metalscrap"] = 30,
+            ["plastic"] = 42,
         },
         type = "item",
         slot = 2,
@@ -61,9 +61,9 @@ Config.CraftingItems = {
         amount = 50,
         info = {},
         costs = {
-            ["metalscrap"] = 5,
-            ["plastic"] = 4,
-            ["aluminum"] = 6,
+            ["metalscrap"] = 30,
+            ["plastic"] = 45,
+            ["aluminum"] = 28,
         },
         type = "item",
         slot = 3,
@@ -76,8 +76,8 @@ Config.CraftingItems = {
         info = {},
         costs = {
             ["electronickit"] = 2,
-            ["plastic"] = 4,
-            ["steel"] = 5,
+            ["plastic"] = 52,
+            ["steel"] = 40,
         },
         type = "item",
         slot = 4,
@@ -89,10 +89,10 @@ Config.CraftingItems = {
         amount = 50,
         info = {},
         costs = {
-            ["metalscrap"] = 4,
-            ["plastic"] = 3,
-            ["aluminum"] = 4,
-            ["iron"] = 5,
+            ["metalscrap"] = 10,
+            ["plastic"] = 50,
+            ["aluminum"] = 30,
+            ["iron"] = 17,
             ["electronickit"] = 1,
         },
         type = "item",
@@ -105,9 +105,9 @@ Config.CraftingItems = {
         amount = 50,
         info = {},
         costs = {
-            ["metalscrap"] = 4,
-            ["steel"] = 4,
-            ["aluminum"] = 4,
+            ["metalscrap"] = 36,
+            ["steel"] = 24,
+            ["aluminum"] = 28,
         },
         type = "item",
         slot = 6,
@@ -119,9 +119,9 @@ Config.CraftingItems = {
         amount = 50,
         info = {},
         costs = {
-            ["metalscrap"] = 4,
-            ["steel"] = 5,
-            ["plastic"] = 7,
+            ["metalscrap"] = 32,
+            ["steel"] = 43,
+            ["plastic"] = 61,
         },
         type = "item",
         slot = 7,
@@ -133,9 +133,9 @@ Config.CraftingItems = {
         amount = 50,
         info = {},
         costs = {
-            ["metalscrap"] = 5,
-            ["steel"] = 5,
-            ["copper"] = 5,
+            ["metalscrap"] = 50,
+            ["steel"] = 37,
+            ["copper"] = 26,
         },
         type = "item",
         slot = 8,
@@ -147,8 +147,8 @@ Config.CraftingItems = {
         amount = 50,
         info = {},
         costs = {
-            ["iron"] = 6,
-            ["glass"] = 6,
+            ["iron"] = 60,
+            ["glass"] = 30,
         },
         type = "item",
         slot = 9,
@@ -160,8 +160,8 @@ Config.CraftingItems = {
         amount = 50,
         info = {},
         costs = {
-            ["aluminum"] = 6,
-            ["glass"] = 6,
+            ["aluminum"] = 60,
+            ["glass"] = 30,
         },
         type = "item",
         slot = 10,
@@ -173,10 +173,10 @@ Config.CraftingItems = {
         amount = 50,
         info = {},
         costs = {
-            ["iron"] = 5,
-            ["steel"] = 5,
-            ["plastic"] = 6,
-            ["aluminum"] = 5,
+            ["iron"] = 33,
+            ["steel"] = 44,
+            ["plastic"] = 55,
+            ["aluminum"] = 22,
         },
         type = "item",
         slot = 11,
@@ -188,37 +188,21 @@ Config.CraftingItems = {
         amount = 50,
         info = {},
         costs = {
-            ["iron"] = 5,
-            ["steel"] = 6,
+            ["iron"] = 50,
+            ["steel"] = 50,
             ["screwdriverset"] = 3,
-            ["advancedlockpick"] = 5,
+            ["advancedlockpick"] = 2,
         },
         type = "item",
         slot = 12,
         threshold = 1750,
         points = 12,
     },
-    [13] = {
-        name = "atm_explosive",
-        amount = 50,
-        info = {},
-        costs = {
-            ["iron"] = 1,
-            ["steel"] = 1,
-            ["screwdriverset"] = 1,
-            ["thermite"] = 1,
-        },
-        type = "item",
-        slot = 13,
-        threshold = 75,
-        points = 12,
-    },
 }
 
-Config.AttachmentCraftingLocation = vector3(88.91, 3743.88, 40.77) 
-
 Config.AttachmentCrafting = {
-	["items"] = {
+    ['location'] = vector3(88.91, 3743.88, 40.77), 
+    ["items"] = {
         [1] = {
             name = "pistol_extendedclip",
             amount = 50,
@@ -248,32 +232,34 @@ Config.AttachmentCrafting = {
             points = 2,
         },
         [3] = {
-            name = "smg_extendedclip",
+            name = "assaultrifle_extendedclip",
             amount = 50,
             info = {},
             costs = {
                 ["metalscrap"] = 190,
                 ["steel"] = 305,
                 ["rubber"] = 85,
+                ["smg_extendedclip"] = 1,
             },
             type = "item",
             slot = 3,
             threshold = 25,
-            points = 3,
+            points = 8,
         },
         [4] = {
-            name = "microsmg_extendedclip",
+            name = "assaultrifle_drum",
             amount = 50,
             info = {},
             costs = {
                 ["metalscrap"] = 205,
                 ["steel"] = 340,
                 ["rubber"] = 110,
+                ["smg_extendedclip"] = 2,
             },
             type = "item",
             slot = 4,
             threshold = 50,
-            points = 4,
+            points = 8,
         },
         [5] = {
             name = "smg_drum",
@@ -287,10 +273,10 @@ Config.AttachmentCrafting = {
             type = "item",
             slot = 5,
             threshold = 75,
-            points = 5,
+            points = 3,
         },
         [6] = {
-            name = "smg_scope",
+            name = "smg_extendedclip",
             amount = 50,
             info = {},
             costs = {
@@ -301,37 +287,35 @@ Config.AttachmentCrafting = {
             type = "item",
             slot = 6,
             threshold = 100,
-            points = 6,
+            points = 4,
         },
         [7] = {
-            name = "assaultrifle_extendedclip",
+            name = "microsmg_extendedclip",
             amount = 50,
             info = {},
             costs = {
                 ["metalscrap"] = 270,
                 ["steel"] = 435,
                 ["rubber"] = 155,
-                ["smg_extendedclip"] = 1,
             },
             type = "item",
             slot = 7,
             threshold = 150,
-            points = 7,
+            points = 5,
         },
         [8] = {
-            name = "assaultrifle_drum",
+            name = "smg_scope",
             amount = 50,
             info = {},
             costs = {
                 ["metalscrap"] = 300,
                 ["steel"] = 469,
                 ["rubber"] = 170,
-                ["smg_extendedclip"] = 2,
             },
             type = "item",
             slot = 8,
             threshold = 200,
-            points = 8,
+            points = 6,
         },
     }
 }
@@ -374,6 +358,7 @@ BackEngineVehicles = {
     [`stingergt`] = true,
     [`surfer`] = true,
     [`surfer2`] = true,
+    [`comet3`] = true,
     [`gp1`] = true,
     [`autarch`] = true,
     [`tyrant`] = true
