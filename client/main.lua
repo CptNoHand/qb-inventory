@@ -19,10 +19,10 @@ local showBlur = true
 
 RegisterNUICallback('showBlur', function()
     Wait(50)
-    TriggerEvent("lj-inventory:client:showBlur")
+    TriggerEvent("qb-inventory:client:showBlur")
 end) 
 
-RegisterNetEvent("lj-inventory:client:showBlur", function()
+RegisterNetEvent("qb-inventory:client:showBlur", function()
     Wait(50)
     showBlur = not showBlur
 end)
@@ -797,7 +797,7 @@ CreateThread(function()
         if DropsNear ~= nil then
             for k, v in pairs(DropsNear) do
                 if DropsNear[k] ~= nil then
-                    DrawMarker( 20, v.coords.x, v.coords.y, v.coords.z - 0.6, 0, 0, 0, 0, 0, 0, 0.35, 0.5, 0.15, 252, 255, 255, 91, 0, 0, 0, 0)
+                    DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.15, 120, 10, 20, 155, false, false, false, 1, false, false, false)
                 end
             end
         end
@@ -859,12 +859,12 @@ CreateThread(function()
 	while true do
 		local pos = GetEntityCoords(PlayerPedId())
 		local inRange = false
-		local distance = #(pos - Config.AttachmentCrafting.location)
+		local distance = #(pos - vector3(Config.AttachmentCraftingLocation))
 
 		if distance < 10 then
 			inRange = true
 			if distance < 1.5 then
-				DrawText3Ds(Config.AttachmentCrafting["location"].x, Config.AttachmentCrafting["location"].y, Config.AttachmentCrafting["location"].z, "~g~E~w~ - Craft")
+				DrawText3Ds(Config.AttachmentCraftingLocation.x, Config.AttachmentCraftingLocation.y, Config.AttachmentCraftingLocation.z, "~g~E~w~ - Craft")
 				if IsControlJustPressed(0, 38) then
 					local crafting = {}
 					crafting.label = "Attachment Crafting"
