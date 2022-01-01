@@ -67,14 +67,14 @@ input[type=number]::-webkit-outer-spin-button {
 #progressbar {
     width: 134.6%;
     margin-left: 0%;
-    margin-top: 6.3%;
+    margin-top: 6.0%;
     background-color: rgb(39 39 49);
 }
 
 #progressbar-other {
     width: 134.8%;
     margin-left: -1.5%;
-    margin-top: 6.3%;
+    margin-top: 5.3%;
     background-color: rgb(39 39 49);
 }
 
@@ -137,11 +137,11 @@ body {
 .player-inventory-bg {
     position: absolute;
     float: left;
-    top: 10%;
-    left: 2.2%;
-    width: 41%;
-    max-width: 41%;
-    height: 75%;
+    top: 52%;
+    left: 8.5%;
+    width: 91%;
+    max-width: 89.3%;
+    height: 47%;
     max-height: 81%;
     background: rgb(35 34 56 / 80%);
 }
@@ -150,8 +150,8 @@ body {
     position: absolute;
     top: 8%;
     left: 2.35%;
-    width: 96.22%;
-    max-width: 102.22%;
+    width: 115.22%;
+    max-width: 100.22%;
     height: 89%;
     max-height: 132%;
     float: left;
@@ -162,25 +162,25 @@ body {
 
 .other-inventory-bg {
     position: absolute;
-    top: 10%;
+    top: 1%;
     float: right;
     right: 2.2%;
     margin: 0 auto;
-    width: 41%;
-    max-width: 41%;
-    height: 75%;
-    max-height: 81%;
+    width: 69%;
+    max-width: 65%;
+    height: 50%;
+    max-height: 50%;
     background: rgb(35 34 56 / 80%);
 }
 
 .other-inventory {
     position: absolute;
-    top: 8%;
-    right: 1.5%;
-    width: 96.22%;
-    max-width: 102.22%;
-    height: 89%;
-    max-height: 132%;
+    top: 12%;
+    right: 0.0%;
+    width: 98.22%;
+    max-width: 97.22%;
+    height: 80%;
+    max-height: 80%;
     float: right;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -211,13 +211,13 @@ body {
     padding-top: 10px;
     padding-left: 10px;
     padding-right: 10px;
-    padding-bottom: 15px;
+    padding-bottom: 23px;
     height: auto;
-    margin: 16% auto;
+    margin: 14%;
     background: rgb(35 34 56 / 80%);
-    right: 0px;
-    width: 11%;
-    left: 3vh;
+    right: 40px;
+    width: 13%;
+    left: 31%;
     cursor: pointer; /* Can also be 'none' however, as these are the buttons I feel as the pointer fits better */
 }
 
@@ -232,7 +232,7 @@ body {
 
 .item-slot {
     position: relative;
-    width: 13.5vh;
+    width: 10.5vh;
     height: 13vh;
     float: left;
     border: 1px solid rgba(255, 255, 255, 0.02);
@@ -314,9 +314,9 @@ body {
 }
 
 .inv-option-item {
-    margin-top: 3%;
+    margin-top: 4%;
     width: 100%;
-    height: 50px;
+    height: 53px;
     margin-left: 0%;
     background-color: #646475 !important;
     border: none;
@@ -478,9 +478,9 @@ body {
 
 .player-inv-info {
     position: absolute;
-    left: 3.3%;
-    top: 8.6%;
-    width: 28.8%;
+    left: 10.75%;
+    top: 49.6%;
+    width: 26.8%;
     z-index: 1000;
     cursor: none;
 }
@@ -553,8 +553,8 @@ body {
 
 .other-inv-info {
     position: absolute;
-    left: 58.3%;
-    top: 8.6%;
+    left: 35.0%;
+    top: 0.6%;
     width: 28.8%;
     z-index: 1000;
 }
