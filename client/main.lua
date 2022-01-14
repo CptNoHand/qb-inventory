@@ -67,9 +67,11 @@ local function FormatWeaponAttachments(itemdata)
             if WeaponAttachments[itemdata.name] ~= nil then
                 for key, value in pairs(WeaponAttachments[itemdata.name]) do
                     if value.component == v.component then
+                        item = value.item
                         attachments[#attachments+1] = {
                             attachment = key,
-                            label = value.label
+                            label = QBCore.Shared.Items[item].label
+                            --label = value.label
                         }
                     end
                 end
@@ -664,6 +666,7 @@ end)
 RegisterNUICallback('RemoveAttachment', function(data, cb)
     local ped = PlayerPedId()
     local WeaponData = QBCore.Shared.Items[data.WeaponData.name]
+    local label = QBCore.Shared.Items
     local Attachment = WeaponAttachments[WeaponData.name:upper()][data.AttachmentData.attachment]
 
     QBCore.Functions.TriggerCallback('weapons:server:RemoveAttachment', function(NewAttachments)
@@ -673,9 +676,10 @@ RegisterNUICallback('RemoveAttachment', function(data, cb)
             for k, v in pairs(NewAttachments) do
                 for wep, pew in pairs(WeaponAttachments[WeaponData.name:upper()]) do
                     if v.component == pew.component then
+                        item = pew.item
                         Attachies[#Attachies+1] = {
                             attachment = pew.item,
-                            label = pew.label,
+                            label = QBCore.Shared.Items[item].label,
                         }
                     end
                 end
