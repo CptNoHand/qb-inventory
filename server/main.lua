@@ -968,6 +968,7 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 			elseif QBCore.Shared.SplitStr(toInventory, "-")[1] == "stash" then
 				local stashId = QBCore.Shared.SplitStr(toInventory, "-")[2]
 				local toItemData = Stashes[stashId].items[toSlot]
+			if not (string.match(fromItemData.name, "backpack") and string.match(toInventory, "backpack")) then
 				Player.Functions.RemoveItem(fromItemData.name, fromAmount, fromSlot)
 				TriggerClientEvent("inventory:client:CheckWeapon", src, fromItemData.name)
 				--Player.PlayerData.items[toSlot] = fromItemData
@@ -985,6 +986,9 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 					local itemInfo = QBCore.Shared.Items[fromItemData.name:lower()]
 					TriggerEvent("qb-log:server:CreateLog", "stash", "Dropped Item", "red", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) dropped new item; name: **"..itemInfo["name"].."**, amount: **" .. fromAmount .. "** - stash: *" .. stashId .. "*")
 				end
+				local itemInfo = QBCore.Shared.Items[fromItemData.name:lower()]
+				AddToStash(stashId, toSlot, fromSlot, itemInfo["name"], fromAmount, fromItemData.info)
+			end
 				local itemInfo = QBCore.Shared.Items[fromItemData.name:lower()]
 				AddToStash(stashId, toSlot, fromSlot, itemInfo["name"], fromAmount, fromItemData.info)
 			elseif QBCore.Shared.SplitStr(toInventory, "-")[1] == "traphouse" then
