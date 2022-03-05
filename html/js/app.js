@@ -603,6 +603,9 @@ function FormatItemInfo(itemData, dom) {
         } else if (itemData.name == "stickynote") {
             $(".item-info-title").html("<p>" + itemData.label + "</p>");
             $(".item-info-description").html("<p>" + itemData.info.label + "</p>");
+        } else if (itemData.name == "bankinvoice") {
+            $(".item-info-title").html("<p>" + itemData.label + "</p>");
+            $(".item-info-description").html('<p><strong>Total Loan Amount: </strong><span>' + itemData.info.loanamount + '</span></p><p><strong>Type of Loan: </strong><span>' + itemData.info.loantype + '</span></p>');
         } else if (itemData.name == "moneybag") {
             $(".item-info-title").html("<p>" + itemData.label + "</p>");
             $(".item-info-description").html(
