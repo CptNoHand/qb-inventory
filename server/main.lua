@@ -1577,3 +1577,5 @@ QBCore.Functions.CreateUseableItem("snowball", function(source, item)
         TriggerClientEvent("inventory:client:UseSnowball", source, itemData.amount)
     end
 end)
+<<<<<<< HEAD
+=======
