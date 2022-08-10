@@ -616,7 +616,7 @@ RegisterCommand('inventory', function()
     end
 end)
 
-RegisterKeyMapping('inventory', 'Open Inventory', 'keyboard', 'TAB')
+RegisterKeyMapping('inventory', 'Open Inventory', 'keyboard', 'I')
 
 RegisterCommand('hotbar', function()
     isHotbar = not isHotbar
