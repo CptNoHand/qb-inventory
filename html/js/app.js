@@ -2703,6 +2703,8 @@ var requiredItemOpen = false;
         }
         $.post("https://qb-inventory/CloseInventory", JSON.stringify({}));
 
+        $('#item-amount').val(''); // reset amount input
+
         if (AttachmentScreenActive) {
             $("#qbcore-inventory").css({ left: "0vw" });
             $(".weapon-attachments-container").css({ left: "-100vw" });
