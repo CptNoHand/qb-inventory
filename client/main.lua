@@ -709,27 +709,20 @@ RegisterCommand('inventory', function()
                 end
             end
 
-            if CurrentVehicle then -- Trunk
-                local vehicleClass = GetVehicleClass(curVeh)
-                local maxweight
-                local slots
-                if vehicleClass == 0 then
-                    maxweight = 38000
-                    slots = 30
-                elseif vehicleClass == 1 then
-                    maxweight = 50000
-                    slots = 40
-                elseif vehicleClass == 2 then
-                    maxweight = 75000
-                    slots = 50
-                elseif vehicleClass == 3 then
-                    maxweight = 42000
-                    slots = 35
-                elseif vehicleClass == 4 then
-                    maxweight = 38000
-                    slots = 30
-                elseif vehicleClass == 5 then
-                    maxweight = 30000
+            -- Trunk
+            if CurrentVehicle ~= nil then
+                local maxweight = 0
+                local slots = 0
+                -- GRAB WEIGHT AND SLOTS FROM SHARED LUA
+                local modelName = GetDisplayNameFromVehicleModel(GetEntityModel(curVeh)):lower()
+
+                if maxweight == 0 and QBCore.Shared.Vehicles[modelName] ~= nil then
+                    maxweight = QBCore.Shared.Vehicles[modelName]['trunkspace']
+                    slots = QBCore.Shared.Vehicles[modelName]['trunkslots']
+                end
+                
+                if maxweight == 0 then
+                    maxweight = 22500
                 end
                 if slots == 0 then
                     slots = 15
