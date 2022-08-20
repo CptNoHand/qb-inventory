@@ -227,7 +227,7 @@ Config.CraftingItems = {
     },
 }
 
-Config.AttachmentCraftingLocation = vector3(88.91, 3743.88, 40.77)
+Config.AttachmentCraftingLocation = vector3(1105.5, -2327.93, 31.39)
 
 Config.AttachmentCrafting = {
 	["items"] = {
@@ -347,8 +347,6 @@ Config.AttachmentCrafting = {
         },
     }
 }
-
-MaxInventorySlots = 50
 
 BackEngineVehicles = {
     [`ninef`] = true,
