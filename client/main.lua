@@ -604,7 +604,7 @@ RegisterNetEvent('inventory:client:UseWeapon', function(weaponData, shootbool)
 end)
 
 RegisterNetEvent('inventory:client:CheckWeapon', function(weaponName)
-    if currentWeapon ~= weaponName:lower() then return end
+    if currentWeapon ~= weaponName then return end
     local ped = PlayerPedId()
     TriggerEvent('weapons:ResetHolster')
     SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
