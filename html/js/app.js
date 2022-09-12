@@ -503,6 +503,23 @@ function FormatItemInfo(itemData, dom) {
             $(".item-info-description").html(
                 "<p>" + itemData.info.uses + " uses left.</p>"
             );
+        } else if (itemData.name == "insurance_docs") {
+            $(".item-info-title").html("<p>" + itemData.label + "</p>");
+            $(".item-info-description").html(
+                "<p><strong>Name: </strong><span>" +
+                itemData.info.personName +
+                "</span></p><p><strong>Date Of Birth: </strong><span>" +
+                itemData.info.personDOB +
+                "</span></p><p><strong>Citizen ID: </strong><span>" +
+                itemData.info.citizenID +
+                "</span></p><p><strong>Days: </strong><span>" +
+                itemData.info.days +
+                "</span></p><p><strong>Car Reg Number: </strong><span>" +
+                itemData.info.car_reg +
+                "</span></p><p><strong>Car Make & Model: </strong><span>" +
+                itemData.info.car_name +
+                "</span></p>"
+            );
         } else if (itemData.type == "weapon") {
             $(".item-info-title").html("<p>" + itemData.label + "</p>");
             if (itemData.info.ammo == undefined) {
@@ -2406,6 +2423,11 @@ var requiredItemOpen = false;
         totalWeight = 0;
         totalWeightOther = 0;
 
+        $("#player-cash").html(data.cash.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 0
+        }));
         $(".player-inventory").find(".item-slot").remove();
         $(".ply-hotbar-inventory").find(".item-slot").remove();
         $(".ply-iteminfo-container").css("opacity", "0.0");
@@ -3016,6 +3038,13 @@ var requiredItemOpen = false;
                         '<div class="inv-option-item" id="rob-money"><p>TAKE MONEY</p></div>'
                     );
                     $("#rob-money").data("TargetId", event.data.TargetId);
+                    break;
+                case "UpdateCash":
+                    $("#player-cash").html(event.data.cash.toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        minimumFractionDigits: 0
+                    }));
                     break;
             }
         });
