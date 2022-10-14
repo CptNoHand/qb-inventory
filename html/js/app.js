@@ -498,6 +498,22 @@ function FormatItemInfo(itemData, dom) {
                 itemData.info.citizenid +
                 "</span></p>"
             );
+        } else if (itemData.name == "syphoningkit") { // Syphoning Kit (CDN-Fuel or CDN-Syphoning!)
+            $(".item-info-title").html("<p>" + itemData.label + "</p>");
+            $(".item-info-description").html(
+                "<p>" + "A kit used to syphon gasoline from vehicles! <br><br>" + itemData.info.gasamount + " Liters Inside.</p>" +
+                "</span></p><p style=\"padding-top: .8vh;font-size:11px\"><b>Weight: </b>" + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + " | <b>Amount: </b> " + itemData.amount
+            );
+        } else if (itemData.name == "jerrycan") { // Jerry Can (CDN-Fuel!)
+            $(".item-info-title").html("<p>" + itemData.label + "</p>");
+            $(".item-info-description").html(
+                "<p>" + "A Jerry Can, designed to hold fuel! <br><br>" + itemData.info.gasamount + " Liters Inside.</p>" +
+                "</span></p><p style=\"padding-top: .8vh;font-size:11px\"><b>Weight: </b>" + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + " | <b>Amount: </b> " + itemData.amount
+            );
+        } else if (itemData.name == "vehiclekey") {
+            $(".item-info-title").html('<p>' + itemData.info.model + '</p>');
+            $(".item-info-description").html('<p>Plate : ' + itemData.info.plate + '</p>'
+            );
         } else if (itemData.name == "harness") {
             $(".item-info-title").html("<p>" + itemData.label + "</p>");
             $(".item-info-description").html(
@@ -519,6 +535,15 @@ function FormatItemInfo(itemData, dom) {
                 "</span></p><p><strong>Car Make & Model: </strong><span>" +
                 itemData.info.car_name +
                 "</span></p>"
+            );
+        } else if (itemData.name == "redwoodcigs") { // Cigarette Pack
+            $(".item-info-title").html("<p>" + itemData.label + "</p>");
+            $(".item-info-description").html(
+                "<p>" + itemData.info.uses + " cigarettes left.</p>"
+            );
+        } else if (itemData.name == "oilbarell") {
+            $(".item-info-title").html("<p>" + itemData.label + "</p>");
+            $(".item-info-description").html("<p>Gal: " + itemData.info.gal + "</p>" + "<p>Type: " + itemData.info.type + "</p>" + "<p>Octane: " + itemData.info.avg_gas_octane + "</p>"
             );
         } else if (itemData.type == "weapon") {
             $(".item-info-title").html("<p>" + itemData.label + "</p>");

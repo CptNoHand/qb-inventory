@@ -655,7 +655,6 @@ RegisterNetEvent('inventory:client:DropItemAnim', function()
     })
     LoadAnimDict("pickup_object")
     TaskPlayAnim(ped, "pickup_object" ,"pickup_low" ,8.0, -8.0, -1, 1, 0, false, false, false )
-    TriggerServerEvent("InteractSound_SV:PlayOnSource", "yeet", 25)
     Wait(2000)
     ClearPedTasks(ped)
 end)
@@ -728,23 +727,68 @@ RegisterCommand('inventory', function()
             end
 
             -- Trunk
-            if CurrentVehicle ~= nil then
-                local maxweight = 0
-                local slots = 0
-                -- GRAB WEIGHT AND SLOTS FROM SHARED LUA
-                local modelName = GetDisplayNameFromVehicleModel(GetEntityModel(curVeh)):lower()
+            if CurrentVehicle then -- Trunk
+                local vehicleClass = GetVehicleClass(curVeh)
+                local maxweight
+                local slots
+                local modelname = string.lower(GetDisplayNameFromVehicleModel(GetEntityModel(curVeh))) --Change Add
+                if QBCore.Shared.Vehicles[modelname] then                               --Change Add
+                    maxweight = QBCore.Shared.Vehicles[modelname].trunk                --Change Add
+                    slots = QBCore.Shared.Vehicles[modelname].trunkslots               --Change Add
+                else                                                                    --Change Add
+                    if vehicleClass == 0 then
+                        maxweight = 38000
+                        slots = 30
+                    elseif vehicleClass == 1 then
+                        maxweight = 50000
+                        slots = 40
+                    elseif vehicleClass == 2 then
+                        maxweight = 75000
+                        slots = 50
+                    elseif vehicleClass == 3 then
+                        maxweight = 42000
+                        slots = 35
+                    elseif vehicleClass == 4 then
+                        maxweight = 38000
+                        slots = 30
+                    elseif vehicleClass == 5 then
+                        maxweight = 30000
+                        slots = 25
+                    elseif vehicleClass == 6 then
+                        maxweight = 30000
+                        slots = 25
+                    elseif vehicleClass == 7 then
+                        maxweight = 30000
+                        slots = 25
+                    elseif vehicleClass == 8 then
+                        maxweight = 15000
+                        slots = 15
+                    elseif vehicleClass == 9 then
+                        maxweight = 60000
+                        slots = 35
+                    elseif vehicleClass == 12 then
+                        maxweight = 120000
+                        slots = 35
+                    elseif vehicleClass == 13 then
+                        maxweight = 0
+                        slots = 0
+                    elseif vehicleClass == 14 then
+                        maxweight = 120000
+                        slots = 50
+                    elseif vehicleClass == 15 then
+                        maxweight = 120000
+                        slots = 50
+                    elseif vehicleClass == 16 then
+                        maxweight = 120000
+                        slots = 50
+                    else
+                        maxweight = 60000
+                        slots = 35
+                    end
+    
+                end                                     --Change Add
 
-                if maxweight == 0 and QBCore.Shared.Vehicles[modelName] ~= nil then
-                    maxweight = QBCore.Shared.Vehicles[modelName]['trunkspace']
-                    slots = QBCore.Shared.Vehicles[modelName]['trunkslots']
-                end
-                
-                if maxweight == 0 then
-                    maxweight = 22500
-                end
-                if slots == 0 then
-                    slots = 15
-                end
+
                 local other = {
                     maxweight = maxweight,
                     slots = slots,
