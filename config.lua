@@ -6,7 +6,7 @@ Config.MaxInventoryWeight = 35000 -- Max weight a player can carry (default 120k
 Config.MaxInventorySlots = 45 -- Max inventory slots for a player
 
 Config.KeyBinds = {
-    Inventory = 'TAB',
+    Inventory = 'I',
     HotBar = 'z'
 }
 
