@@ -12,7 +12,6 @@ local CurrentGlovebox = nil
 local CurrentStash = nil
 local isCrafting = false
 local isHotbar = false
-local WeaponAttachments = {}
 local showBlur = true
 
 local function HasItem(items, amount)
@@ -111,12 +110,18 @@ local function FormatWeaponAttachments(itemdata)
     itemdata.name = itemdata.name:upper()
     if itemdata.info.attachments ~= nil and next(itemdata.info.attachments) ~= nil then
         for _, v in pairs(itemdata.info.attachments) do
-            attachments[#attachments+1] = {
-                attachment = v.item,
-                label = v.label,
-                image = QBCore.Shared.Items[v.item].image,
-                component = v.component
-            }
+            if exports['qb-weapons']:getConfigWeaponAttachments(itemdata.name) then
+                for key, value in pairs(exports['qb-weapons']:getConfigWeaponAttachments(itemdata.name)) do
+                    if value.component == v.component then
+                        local item = value.item
+                        attachments[#attachments+1] = {
+                            attachment = key,
+                            label = QBCore.Shared.Items[item].label
+                            --label = value.label
+                        }
+                    end
+                end
+            end
         end
     end
     return attachments
@@ -561,8 +566,7 @@ RegisterNetEvent('inventory:client:UseWeapon', function(weaponData, shootbool)
     local ped = PlayerPedId()
     local weaponName = tostring(weaponData.name)
     local weaponHash = joaat(weaponData.name)
-    local weaponinhand = GetCurrentPedWeapon(PlayerPedId())
-    if currentWeapon == weaponName and weaponinhand then
+    if currentWeapon == weaponName then
         TriggerEvent('weapons:client:DrawWeapon', nil)
         SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
         RemoveAllPedWeapons(ped, true)
@@ -800,7 +804,7 @@ RegisterCommand('inventory', function()
     end
 end, false)
 
-RegisterKeyMapping('inventory', 'Open Inventory', 'keyboard', 'I')
+RegisterKeyMapping('inventory', Lang:t("inf_mapping.opn_inv"), 'keyboard', Config.KeyBinds.Inventory)
 
 RegisterCommand('hotbar', function()
     isHotbar = not isHotbar
@@ -809,7 +813,7 @@ RegisterCommand('hotbar', function()
     end
 end)
 
-RegisterKeyMapping('hotbar', 'Toggles keybind slots', 'keyboard', 'z')
+RegisterKeyMapping('hotbar', Lang:t("inf_mapping.tog_slots"), 'keyboard', Config.KeyBinds.HotBar)
 
 for i = 1, 6 do
     RegisterCommand('slot' .. i,function()
@@ -851,18 +855,21 @@ end)
 RegisterNUICallback('RemoveAttachment', function(data, cb)
     local ped = PlayerPedId()
     local WeaponData = QBCore.Shared.Items[data.WeaponData.name]
-    print(data.AttachmentData.attachment:gsub("(.*).*_",''))
-    data.AttachmentData.attachment = data.AttachmentData.attachment:gsub("(.*).*_",'')
+    local Attachment = exports['qb-weapons']:getConfigWeaponAttachments(WeaponData.name:upper())[data.AttachmentData.attachment]
     QBCore.Functions.TriggerCallback('weapons:server:RemoveAttachment', function(NewAttachments)
         if NewAttachments ~= false then
             local attachments = {}
             RemoveWeaponComponentFromPed(ped, GetHashKey(data.WeaponData.name), GetHashKey(data.AttachmentData.component))
             for _, v in pairs(NewAttachments) do
-                attachments[#attachments+1] = {
-                    attachment = v.item,
-                    label = v.label,
-                    image = QBCore.Shared.Items[v.item].image
-                }
+                for _, pew in pairs(exports['qb-weapons']:getConfigWeaponAttachments(WeaponData.name:upper())) do
+                    if v.component == pew.component then
+                        local item = pew.item
+                        Attachies[#Attachies+1] = {
+                            attachment = pew.item,
+                            label = QBCore.Shared.Items[item].label,
+                        }
+                    end
+                end
             end
             local DJATA = {
                 Attachments = attachments,

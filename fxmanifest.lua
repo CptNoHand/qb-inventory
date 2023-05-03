@@ -1,12 +1,14 @@
 fx_version 'cerulean'
 game 'gta5'
 
-description 'qb-Inventory'
-version '1.1'
+description 'QB-Inventory'
+version '1.2.4'
 
 shared_scripts {
-	'config.lua',
-	'@qb-weapons/config.lua'
+    '@qb-core/shared/locale.lua',
+    'locales/en.lua',
+    'locales/*.lua',
+    'config.lua',
 }
 
 server_scripts {
@@ -32,5 +34,6 @@ files {
 	'html/*.ttf'
 }
 
+dependecy 'qb-weapons'
 
 lua54 'yes'

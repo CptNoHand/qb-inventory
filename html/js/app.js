@@ -1727,6 +1727,10 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
             );
         } else {
             if (fromData.amount == $toAmount) {
+                if (toData && toData.unique){            
+                    InventoryError($fromInv, $fromSlot);
+                    return;
+                }
                 if (
                     toData != undefined &&
                     toData.combinable != null &&
