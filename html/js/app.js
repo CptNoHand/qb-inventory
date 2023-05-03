@@ -248,6 +248,26 @@ $(document).on("click", ".weapon-attachments-back", function(e) {
     AttachmentScreenActive = false;
 });
 
+function changeInventoryColor(color) {
+    $( ".player-inventory-bg" ).css( "background-color", color);
+    $( ".other-inventory-bg" ).css( "background-color", color);
+    $( ".inv-options" ).css( "background-color", color);
+    localStorage.setItem('lj-inventory-color', color);
+}
+
+const savedColor = localStorage.getItem('lj-inventory-color');
+
+if (savedColor) {
+    changeInventoryColor(savedColor)
+}
+
+$('#favcolor').change(function(){
+    let color = $(this).val();
+    let hexOpacity = "CC";
+    let finalColor = color+hexOpacity;
+    changeInventoryColor(finalColor);
+});
+
 function FormatAttachmentInfo(data) {
     $.post(
         "https://qb-inventory/GetWeaponData",
@@ -304,10 +324,7 @@ function FormatAttachmentInfo(data) {
                             '"> <div class="weapon-attachment-label"><p>' +
                             attachment.label +
                             '</p></div> <div class="weapon-attachment-img"><img src="./images/' +
-                            WeaponType +
-                            "_" +
-                            attachment.attachment +
-                            '.png"></div> </div>'
+                            attachment.image + '"></div> </div>'
                         );
                         attachment.id = i;
                         $("#weapon-attachment-" + i).data("AttachmentData", attachment);
@@ -662,6 +679,12 @@ function FormatItemInfo(itemData, dom) {
                 itemData.info.worth +
                 "</span></p>"
             );
+        } else if (itemData.name == "visa" || itemData.name == "mastercard") {
+            $(".item-info-title").html('<p>'+itemData.label+'</p>')
+            var str = ""+ itemData.info.cardNumber + "";
+            var res = str.slice(12);
+            var cardNumber = "************" + res;
+            $(".item-info-description").html('<p><strong>Card Holder: </strong><span>' + itemData.info.name + '</span></p><p><strong>Citizen ID: </strong><span>' + itemData.info.citizenid + '</span></p><p><strong>Card Number: </strong><span>' + cardNumber + '</span></p>');
         } else if (itemData.name == "labkey") {
             $(".item-info-title").html("<p>" + itemData.label + "</p>");
             $(".item-info-description").html("<p>Lab: " + itemData.info.lab + "</p>");
@@ -2453,6 +2476,7 @@ var requiredItemOpen = false;
             currency: 'USD',
             minimumFractionDigits: 0
         }));
+
         $(".player-inventory").find(".item-slot").remove();
         $(".ply-hotbar-inventory").find(".item-slot").remove();
         $(".ply-iteminfo-container").css("opacity", "0.0");
@@ -2977,11 +3001,11 @@ var requiredItemOpen = false;
         if (itemBoxtimer !== null) {
             clearTimeout(itemBoxtimer);
         }
-        var type = "Used 1x";
+        var type = "Used " + data.itemAmount + "x";
         if (data.type == "add") {
-            type = "Received 1x";
+          type = "Received " + data.itemAmount + "x";
         } else if (data.type == "remove") {
-            type = "Removed 1x";
+          type = "Removed " + data.itemAmount + "x";
         }
 
         var $itembox = $(".itembox-container.template").clone();
